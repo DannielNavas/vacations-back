@@ -20,7 +20,7 @@ import { SubscribeModule } from './subscribe/subscribe.module';
         MONGO_USER: Joi.string().required(),
         MONGO_PASSWORD: Joi.string().required(),
         MONGO_HOST: Joi.string().required(),
-        MONGO_PORT: Joi.number().required(),
+        MONGO_PORT: Joi.string().required(),
         MONGO_CONNECTION: Joi.string().required(),
       }),
     }),
