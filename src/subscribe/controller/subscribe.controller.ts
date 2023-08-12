@@ -15,7 +15,7 @@ export class SubscribeController {
     const data = this.subscribeService.create(payload);
     const msg = {
       to: payload.email, // Change to your recipient
-      from: 'admin@danniel.dev', // Change to your verified sender
+      from: 'dannielnavas@gmail.com', // Change to your verified sender
       subject: ETextEmail.subject,
       text: ETextEmail.body,
     };
