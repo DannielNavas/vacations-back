@@ -1,6 +1,8 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
+import * as client from '@sendgrid/client';
+import { ClientRequest } from '@sendgrid/client/src/request';
 import * as SendGrid from '@sendgrid/mail';
 import { Model } from 'mongoose';
 import config from '../../config';
@@ -15,6 +17,29 @@ export class SubscribeService {
     private readonly subscribeModel: Model<Subscribe>,
   ) {
     SendGrid.setApiKey(this.configService.sendgridApiKey);
+  }
+
+  async warmup(ip: string) {
+    const data = {
+      ip,
+    };
+
+    const request: ClientRequest = {
+      url: `/v3/ips/warmup`,
+      method: 'POST',
+      body: data,
+    };
+
+    client
+      .request(request)
+      .then(([response, body]) => {
+        console.log(response.statusCode);
+        console.log(response.body);
+        console.log(body);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   async create(payload: CreateSubscribeDto) {
