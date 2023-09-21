@@ -2,7 +2,6 @@ import { Body, Controller, Ip, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateSubscribeDto } from '../dtos/subscribe.dto';
 import { SubscribeService } from '../service/subscribe.service';
-import { ETextEmail } from '../service/text.email';
 
 @ApiTags('Subscribe')
 @Controller('subscribe')
@@ -14,14 +13,6 @@ export class SubscribeController {
   async subscribe(@Body() payload: CreateSubscribeDto, @Ip() ip: string) {
     await this.subscribeService.warmup(ip);
     const data = this.subscribeService.create(payload);
-    const msg = {
-      to: payload.email, // Change to your recipient
-      from: 'dannielnavas@gmail.com', // Change to your verified sender
-      subject: ETextEmail.subject,
-      text: ETextEmail.body,
-    };
-    const email = await this.subscribeService.send(msg);
-    console.log(email);
     return data;
   }
 }
