@@ -15,4 +15,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   @ApiProperty({ description: 'Photo URL of the user' })
   readonly photoURL: string;
+  @IsNotEmpty()
+  @ApiProperty({ description: 'Plan of the user' })
+  readonly plan: string;
 }
