@@ -1,9 +1,8 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
-import * as client from '@sendgrid/client';
-import { ClientRequest } from '@sendgrid/client/src/request';
 import { Model } from 'mongoose';
+import { Resend } from 'resend';
 import config from '../../config';
 import { CreateSubscribeDto } from '../dtos/subscribe.dto';
 import { Subscribe } from '../entities/subscribe.entitie';
@@ -16,27 +15,14 @@ export class SubscribeService {
     private readonly subscribeModel: Model<Subscribe>,
   ) {}
 
-  async warmup(ip: string) {
-    const data = {
-      ip,
-    };
-
-    const request: ClientRequest = {
-      url: `/v3/ips/warmup`,
-      method: 'POST',
-      body: data,
-    };
-
-    client
-      .request(request)
-      .then(([response, body]) => {
-        console.log(response.statusCode);
-        console.log(response.body);
-        console.log(body);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  async sendMail(email: string) {
+    const resend = new Resend(this.configService.resendApiKey);
+    return await resend.emails.send({
+      from: 'onboarding@resend.dev',
+      to: email,
+      subject: 'Hello World',
+      html: '<p>Congrats on sending your <strong>first email</strong>!</p>',
+    });
   }
 
   async create(payload: CreateSubscribeDto) {

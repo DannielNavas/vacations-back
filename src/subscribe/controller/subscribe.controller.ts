@@ -1,4 +1,4 @@
-import { Body, Controller, Ip, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateSubscribeDto } from '../dtos/subscribe.dto';
 import { SubscribeService } from '../service/subscribe.service';
@@ -10,9 +10,10 @@ export class SubscribeController {
 
   @ApiOperation({ summary: 'Subscribe to the newsletter' })
   @Post()
-  async subscribe(@Body() payload: CreateSubscribeDto, @Ip() ip: string) {
-    await this.subscribeService.warmup(ip);
+  async subscribe(@Body() payload: CreateSubscribeDto) {
     const data = this.subscribeService.create(payload);
+    const email = this.subscribeService.sendMail(payload.email);
+    console.log(email);
     return data;
   }
 }

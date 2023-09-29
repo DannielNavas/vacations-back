@@ -9,5 +9,5 @@ export default registerAs('config', () => ({
     port: process.env.MONGO_PORT,
     connection: process.env.MONGO_CONNECTION,
   },
-  sendgridApiKey: process.env.SENDGRID_API_KEY,
+  resendApiKey: process.env.RESEND_API_KEY,
 }));
