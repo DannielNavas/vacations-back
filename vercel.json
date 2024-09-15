@@ -1,13 +1,5 @@
 {
   "version": 2,
-  "env": {
-    "MONGO_DB_NAME": "vacations",
-    "MONGO_USER": "vacations",
-    "MONGO_PASSWORD": "aoQPvLYDqxZcUXLN",
-    "MONGO_HOST": "vacations",
-    "MONGO_PORT": "27017",
-    "MONGO_CONNECTION": "mongodb://vacations:27017/vacations"
-  },
   "builds": [
     {
       "src": "dist/main.js",
